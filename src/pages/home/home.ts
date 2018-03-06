@@ -11,37 +11,36 @@ import { Filtro } from '../../providers/basejson/filtrojson';
 })
 export class HomePage {
 
-  private busca;
-
   private lista: ProgramaOcorrencia[];
-  private selecionado: number = 0;
-
-  public lala='teste';
-
   private filtrojson: Filtro;
-  private listaFiltrada: ProgramaOcorrencia[];
 
   private nomePrograma: string;
   private ano: number;
   private municipio: string;
 
+
   constructor(public navCtrl: NavController, private basejson: BasejsonProvider) {
-
     this.montarTabelaInicial();
-
   }
 
-  protected montarTabelaInicial() {
+  private montarTabelaInicial() {
     this.basejson.listarTodos().then(
-      (dados) => { this.lista = <ProgramaOcorrencia[]>dados; console.log(this.lista);  }
+      () => { this.lista = this.basejson.lista; console.log(this.lista) }
     );
   }
 
-  public montarTabelaPeloNome(busca: string) {
-    this.basejson.listarPorNome(busca).then(
-      (dadosFiltrados) => { this.listaFiltrada = dadosFiltrados; console.log(this.listaFiltrada) }
+  public montarPeloFiltro() {
+    this.montarFiltro();
+    console.log(this.filtrojson.valorBusca);
+    console.log(this.filtrojson.campoBusca)
+    this.basejson.listarPorFiltro(this.filtrojson.valorBusca, this.filtrojson.campoBusca).then(
+      () => {
+        this.lista = this.basejson.lista;
+        console.log(this.lista);
+      }
     );
   }
+
 
   private montarFiltro() {
     this.filtrojson = new Filtro();
@@ -58,16 +57,16 @@ export class HomePage {
       this.filtrojson.campoBusca.push('municipio');
       this.filtrojson.valorBusca.push(this.municipio);
     }
-
+    // console.log(this.filtrojson);
   }
 
-  public montarTabelaConsultada() {
-    this.montarFiltro();
+  // public montarTabelaConsultada() {
+  //   this.montarFiltro();
 
-    this.basejson.listarPorFiltro(this.filtrojson).then(
-      (dadosFiltrados) => { this.listaFiltrada = dadosFiltrados; console.log(this.listaFiltrada) }
-    );
-  }
+  //   this.basejson.listarPorFiltro(this.filtrojson).then(
+  //     (dadosFiltrados) => { this.listaFiltrada = dadosFiltrados; console.log(this.listaFiltrada) }
+  //   );
+  // }
 
   public get $lista(): ProgramaOcorrencia[] {
     return this.lista;
