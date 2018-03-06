@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Lista</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openModal()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <!-- <ion-item>
+    Programa: {{item.nom_programa}} | Ano: {{item.ano}} | Microrregiao : {{item.microrregiao}} | Regional: {{item.regional}}
+    | Município: {{item.municipio}} | Famílias Atendidas: {{item.familias_atendidas}} | Valor Financiado: {{item.valor_financiado}}
+    | Valor Subvencionado: {{item.valor_subvencionado}}
+  </ion-item> -->
+
+  <ion-item *ngFor="let item of basejson.lista" value="item">
+    <ion-item>Programa: {{item.nom_programa}}</ion-item>
+    <ion-item>Ano: {{item.ano}}</ion-item>
+    <ion-item>Microrregiao : {{item.microrregiao}}</ion-item>
+    <ion-item>Regional: {{item.regional}}</ion-item>
+    <ion-item>Município: {{item.municipio}}</ion-item>
+    <ion-item>Famílias Atendidas: {{item.familias_atendidas}}</ion-item>
+    <ion-item>Valor Financiado: {{item.valor_financiado}}</ion-item>
+    <ion-item>Valor Subvencionado: {{item.valor_subvencionado}}</ion-item>
+  </ion-item>
+
+  <!-- <ion-input #vrb placeholder="Digite"></ion-input>
+    <button (click)='montarTabelaPeloNome(vrb.value)'>Clique</button> -->
+
+</ion-content>

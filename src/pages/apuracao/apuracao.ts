@@ -7,11 +7,10 @@ import { Filtro } from '../../providers/basejson/filtrojson';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'apuracao.html'
 })
-export class HomePage {
+export class ApuracaoPage {
 
-  private lista: ProgramaOcorrencia[];
   private filtrojson: Filtro;
 
   private nomePrograma: string;
@@ -20,12 +19,12 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, private basejson: BasejsonProvider) {
-    this.montarTabelaInicial();
+    // this.montarTabelaInicial();
   }
 
   private montarTabelaInicial() {
     this.basejson.listarTodos().then(
-      () => { this.lista = this.basejson.lista; console.log(this.lista) }
+      () => { console.log(this.basejson.lista); }
     );
   }
 
@@ -33,10 +32,9 @@ export class HomePage {
     this.montarFiltro();
     console.log(this.filtrojson.valorBusca);
     console.log(this.filtrojson.campoBusca)
-    this.basejson.listarPorFiltro(this.filtrojson.valorBusca, this.filtrojson.campoBusca).then(
+    this.basejson.listarPorFiltro(this.filtrojson).then(
       () => {
-        this.lista = this.basejson.lista;
-        console.log(this.lista);
+        console.log(this.basejson.lista);
       }
     );
   }
@@ -57,32 +55,6 @@ export class HomePage {
       this.filtrojson.campoBusca.push('municipio');
       this.filtrojson.valorBusca.push(this.municipio);
     }
-    // console.log(this.filtrojson);
   }
-
-  // public montarTabelaConsultada() {
-  //   this.montarFiltro();
-
-  //   this.basejson.listarPorFiltro(this.filtrojson).then(
-  //     (dadosFiltrados) => { this.listaFiltrada = dadosFiltrados; console.log(this.listaFiltrada) }
-  //   );
-  // }
-
-  public get $lista(): ProgramaOcorrencia[] {
-    return this.lista;
-  }
-
-  public set $lista(value: ProgramaOcorrencia[]) {
-    this.lista = value;
-  }
-
-  public get $selecionado(): number {
-    return this.selecionado;
-  }
-
-  public set $selecionado(value: number) {
-    this.selecionado = value;
-  }
-
 
 }

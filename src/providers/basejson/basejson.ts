@@ -7,6 +7,8 @@ import { Filtro } from './filtrojson';
 export class BasejsonProvider {
 
   private _lista: ProgramaOcorrencia[];
+  private _listaNomes: string[] = [];
+  private _listaMunicipios: string[] = [];
 
   constructor(private http: HttpClient) {
   }
@@ -25,8 +27,26 @@ export class BasejsonProvider {
           console.log(err);
         });
     })
-      .then((retorno) => { this._lista = <ProgramaOcorrencia[]>retorno; })
+      .then((retorno) => {
+        this._lista = <ProgramaOcorrencia[]>retorno;
+
+        if (this._listaNomes.length === 0 || this._listaMunicipios.length === 0) {
+          this.carregaSelectsView();
+        }
+
+      })
       .catch((e) => { console.error(e) });
+  }
+
+  carregaSelectsView() {
+    this._lista.forEach(element => {
+      if (this._listaNomes.indexOf(element.nom_programa) < 0) {
+        this._listaNomes.push(element.nom_programa);
+      }
+      if (this._listaMunicipios.indexOf(element.municipio) < 0) {
+        this._listaMunicipios.push(element.municipio);
+      }
+    });
   }
 
   listarPorNome(busca: string): void {
@@ -69,34 +89,18 @@ export class BasejsonProvider {
     this._lista = listaFiltrada;
   }
 
-  listarPorFiltro(valores: any[], ...campos) {
+  public listarPorFiltro(filtro: Filtro) {
     return this.listarTodos().then(
       () => {
-        // if (valores.length == 3) {
-        //   this.listarPorNome(valores[0]);
-        //   this.listarPorAno(valores[1]);
-        //   this.listarPorMunicipio(valores[2]);
-        // } else {
-        //   if(valores.length == 2){
-
-        //   }
-        // }
-        for (let i = 0; i < valores.length; i++) {
-          console.log(valores.length + campos[i])
-          if (campos[i] == "nom_programa") {
-            console.log("tem nome");
-            this.listarPorNome(valores[i]);
-            continue;
+        for (let i = 0; i < filtro.valorBusca.length; i++) {
+          if (filtro.campoBusca[i] == "nom_programa") {
+            this.listarPorNome(filtro.valorBusca[i]);
           } else {
-            if (campos[i] == "ano") {
-              console.log("tem ANO");
-              this.listarPorAno(valores[i]);
-              continue;
+            if (filtro.campoBusca[i] == "ano") {
+              this.listarPorAno(filtro.valorBusca[i]);
             } else {
-              if (campos[i] == "municipio") {
-                console.log("tem municipio");
-                this.listarPorMunicipio(valores[i]);
-                continue;
+              if (filtro.campoBusca[i] == "municipio") {
+                this.listarPorMunicipio(filtro.valorBusca[i]);
               }
             }
           }
@@ -104,43 +108,5 @@ export class BasejsonProvider {
       }
     );
   }
-
-  // listarPorFiltro(filtrojson: Filtro) {
-  //   let listaFiltrada: ProgramaOcorrencia[] = [];
-  //   console.log();
-  //   return this.listarTodos().then(
-  //     (retorno) => {
-  //       (<ProgramaOcorrencia[]>retorno).filter(
-  //         (item) => {
-  //           for (let i = 0; i < filtrojson.campoBusca.length; i++) {
-
-  //             if (item[filtrojson.campoBusca[i]].includes(filtrojson.valorBusca[i])) {
-  //               listaFiltrada.push(item);
-  //             }
-  //           }
-  //         }
-  //       );
-  //       return listaFiltrada;
-  //     }
-  //   );
-  // }
-
-  //ANO | PROGRAMA | CIDADE
-
-  // listarTodos(): any {
-
-  //   return fetch('../../assets/base-json/dados.json')
-  //     .then(function (response) {
-  //       return response.json();
-  //     })
-  //     .then(function (jsonData) {
-  //       return jsonData;
-  //     })
-  //     .catch(function (err) {
-  //       console.log("Opps, Something went wrong!", err);
-  //     })
-
-  // }
-
 
 }
