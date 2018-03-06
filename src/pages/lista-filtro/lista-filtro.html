@@ -2,7 +2,7 @@
 
   <ion-navbar>
 
-    <ion-title>Filtro Page</ion-title>
+    <ion-title>Filtro Lista</ion-title>
 
     <ion-buttons end>
       <button ion-button (click)="closeModal()">X</button>
@@ -14,5 +14,24 @@
 
 
 <ion-content padding>
-  
+
+  <ion-item>
+    <ion-label floating>Nome do Programa</ion-label>
+    <ion-select name="nome" [(ngModel)]="nomePrograma">
+      <ion-option value="Fomento Geral">Fomento Geral</ion-option>
+      <ion-option value="Fundo de Terras">Fundo de Terras</ion-option>
+      <ion-option value="Terra Boa">Terra Boa</ion-option>
+      <ion-option value="SC Rural">SC Rural</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Ano</ion-label>
+    <ion-datetime displayFormat="YYYY" name="ano" [(ngModel)]="ano"></ion-datetime>
+  </ion-item>
+
+  <ion-buttons end>
+    <button ion-button (click)="closeModal()">Buscar</button>
+  </ion-buttons>
+
+
 </ion-content>
