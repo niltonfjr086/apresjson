@@ -11,13 +11,6 @@ import { Filtro } from '../../providers/basejson/filtrojson';
 })
 export class ApuracaoPage {
 
-  private filtrojson: Filtro;
-
-  private nomePrograma: string;
-  private ano: number;
-  private municipio: string;
-
-
   constructor(public navCtrl: NavController, private basejson: BasejsonProvider) {
     // this.montarTabelaInicial();
   }
@@ -28,33 +21,6 @@ export class ApuracaoPage {
     );
   }
 
-  public montarPeloFiltro() {
-    this.montarFiltro();
-    console.log(this.filtrojson.valorBusca);
-    console.log(this.filtrojson.campoBusca)
-    this.basejson.listarPorFiltro(this.filtrojson).then(
-      () => {
-        console.log(this.basejson.lista);
-      }
-    );
-  }
-
-
-  private montarFiltro() {
-    this.filtrojson = new Filtro();
-
-    if (this.nomePrograma) {
-      this.filtrojson.campoBusca.push('nom_programa');
-      this.filtrojson.valorBusca.push(this.nomePrograma);
-    }
-    if (this.ano) {
-      this.filtrojson.campoBusca.push('ano');
-      this.filtrojson.valorBusca.push(this.ano);
-    }
-    if (this.municipio) {
-      this.filtrojson.campoBusca.push('municipio');
-      this.filtrojson.valorBusca.push(this.municipio);
-    }
-  }
+  
 
 }

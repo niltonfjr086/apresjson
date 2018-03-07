@@ -3,13 +3,6 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { Filtro } from '../../providers/basejson/filtrojson';
 import { BasejsonProvider } from '../../providers/basejson/basejson';
 
-/**
- * Generated class for the ListaFiltroPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-lista-filtro',
@@ -40,7 +33,9 @@ export class ListaFiltroPage {
     console.log(this.filtrojson.valorBusca);
     console.log(this.filtrojson.campoBusca)
     this.basejson.listarPorFiltro(this.filtrojson).then(
+      
       () => {
+        this.closeModal();
         console.log(this.basejson.lista);
       }
     );

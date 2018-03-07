@@ -55,6 +55,12 @@ export class BasejsonProvider {
     this._lista.filter(
       (item) => {
         if (item.nom_programa.toLowerCase().includes(busca.toLowerCase())) {
+          if (typeof item.valor_financiado !== "number") {
+            item.valor_financiado = 0;
+          }
+          if (typeof item.valor_subvencionado !== "number") {
+            item.valor_subvencionado = 0;
+          }
           listaFiltrada.push(item);
         }
       }
@@ -68,6 +74,12 @@ export class BasejsonProvider {
     this._lista.filter(
       (item) => {
         if (item.ano == busca) {
+          if (typeof item.valor_financiado !== "number") {
+            item.valor_financiado = 0;
+          }
+          if (typeof item.valor_subvencionado !== "number") {
+            item.valor_subvencionado = 0;
+          }
           listaFiltrada.push(item);
         }
       }
@@ -82,6 +94,12 @@ export class BasejsonProvider {
     this._lista.filter(
       (item) => {
         if (item.municipio.toLowerCase().includes(busca.toLowerCase())) {
+          if (typeof item.valor_financiado !== "number") {
+            item.valor_financiado = 0;
+          }
+          if (typeof item.valor_subvencionado !== "number") {
+            item.valor_subvencionado = 0;
+          }
           listaFiltrada.push(item);
         }
       }
