@@ -16,7 +16,8 @@ export class ListaFiltroPage {
   private ano: number;
   private municipio: string;
 
-  constructor(public navCtrl: NavController, private basejson: BasejsonProvider,
+
+  constructor(public navCtrl: NavController, public basejson: BasejsonProvider,
     private navParams: NavParams, private view: ViewController) {
   }
 
@@ -30,13 +31,10 @@ export class ListaFiltroPage {
 
   public montarPeloFiltro() {
     this.montarFiltro();
-    console.log(this.filtrojson.valorBusca);
-    console.log(this.filtrojson.campoBusca)
+
     this.basejson.listarPorFiltro(this.filtrojson).then(
-      
       () => {
         this.closeModal();
-        console.log(this.basejson.lista);
       }
     );
   }

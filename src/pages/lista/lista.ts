@@ -13,8 +13,12 @@ export class ListaPage {
   }
 
   openModal() {
-    const filtroModal = this.modal.create('ListaFiltroPage');
-    filtroModal.present();
+    this.basejson.listarTodos().then(
+      () => {
+        const filtroModal = this.modal.create('ListaFiltroPage');
+        filtroModal.present();
+      }
+    );
   }
 
 }

@@ -15,22 +15,32 @@
 
 <ion-content padding>
   <form>
+
     <ion-item>
       <ion-label floating>Nome do Programa</ion-label>
       <ion-select name="nome" [(ngModel)]="nomePrograma">
-        <ion-option value="Fomento Geral">Fomento Geral</ion-option>
-        <ion-option value="Fundo de Terras">Fundo de Terras</ion-option>
-        <ion-option value="Terra Boa">Terra Boa</ion-option>
-        <ion-option value="SC Rural">SC Rural</ion-option>
+        <ion-option *ngFor="let item of basejson.listaNomes" [value]="item">{{ item }}</ion-option>
       </ion-select>
     </ion-item>
+
     <ion-item>
       <ion-label floating>Ano</ion-label>
       <ion-datetime displayFormat="YYYY" name="ano" [(ngModel)]="ano"></ion-datetime>
     </ion-item>
+
+    <ion-item>
+        <ion-label floating>Município</ion-label>
+        <ion-input></ion-input>
+        <div class="municipios-autocomplete-dropdown">
+          
+        </div>
+      </ion-item>
+
     <ion-buttons end>
       <button color="dark" ion-button (click)="montarPeloFiltro()">Buscar</button>
     </ion-buttons>
+
+
   </form>
 
 

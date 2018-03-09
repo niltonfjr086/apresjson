@@ -1,3 +1,11 @@
 page-lista-filtro {
 
 }
+
+.municipios-autocomplete-dropdown{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    background: yellow;
+    overflow: auto;
+}

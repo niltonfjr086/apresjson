@@ -20,7 +20,7 @@
       <ion-col>Valor Financiado</ion-col>
     </ion-row>
 
-    <ion-row text-center wrap *ngFor="let item of basejson.lista; let i = index" value="item">
+    <ion-row text-center wrap *ngFor="let item of basejson.listaFiltrada; let i = index" value="item">
       <ion-col class="celula">{{ item.nom_programa }}</ion-col>
       <ion-col class="celula">{{ item.ano }}</ion-col>
       <ion-col class="celula">{{ item.municipio }}</ion-col>

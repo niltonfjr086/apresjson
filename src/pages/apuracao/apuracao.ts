@@ -15,11 +15,11 @@ export class ApuracaoPage {
     // this.montarTabelaInicial();
   }
 
-  private montarTabelaInicial() {
-    this.basejson.listarTodos().then(
-      () => { console.log(this.basejson.lista); }
-    );
-  }
+  // private montarTabelaInicial() {
+  //   this.basejson.listarTodos().then(
+  //     () => { console.log(this.basejson.lista); }
+  //   );
+  // }
 
   
 
