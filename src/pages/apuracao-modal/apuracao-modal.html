@@ -1,0 +1,41 @@
+<!--
+  Generated template for the ApuracaoModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Filtro Modal</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-buttons end>
+  <button ion-button color="dark" (click)="closeModal()">X</button>
+</ion-buttons>
+
+<ion-content padding>
+
+  <ion-grid>
+
+    <ion-row text-center wrap class="cabecalho">
+      <ion-col>Nome Programa</ion-col>
+      <ion-col>Ano</ion-col>
+      <ion-col>Município</ion-col>
+      <ion-col>Valor Financiado</ion-col>
+    </ion-row>
+
+    <ion-row text-center wrap *ngFor="let item of basejson.listaFiltrada; let i = index" value="item">
+      <ion-col class="celula">{{ item.nom_programa }}</ion-col>
+      <ion-col class="celula">{{ item.ano }}</ion-col>
+      <ion-col class="celula">{{ item.municipio }}</ion-col>
+
+      <!-- <ion-col class="celula">{{ item.valor_financiado }}</ion-col> -->
+      <ion-col class="celula">{{ item.valor_financiado | currency : " " : 2}}</ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

@@ -1,11 +1,31 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Apuração</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openModal()">Abrir</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <!-- <ion-img src="../../assets/imgs/ciasc-logo.png"></ion-img> -->
+  <ion-grid>
 
-  <ion-img src="../../assets/imgs/ciasc-logo.png"></ion-img>
+  <ion-row text-center wrap class="cabecalho">
+    <ion-col>Nome Programa</ion-col>
+    <ion-col>Ano</ion-col>
+    <ion-col>Município</ion-col>
+    <ion-col>Valor Financiado</ion-col>
+  </ion-row>
 
+  <!-- <ion-row text-center wrap *ngFor="let item of basejson.listaFiltrada; let i = index" value="item">
+    <ion-col class="celula">{{ item.nom_programa }}</ion-col>
+    <ion-col class="celula">{{ item.ano }}</ion-col>
+    <ion-col class="celula">{{ item.municipio }}</ion-col>
+    
+    <ion-col class="celula">{{ item.valor_financiado | currency : " " : 2}}</ion-col>
+  </ion-row> -->
+  <!-- <ion-col class="celula">{{ item.valor_financiado }}</ion-col> -->
+
+  </ion-grid>
 </ion-content>
