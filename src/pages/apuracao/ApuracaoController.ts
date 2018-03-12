@@ -16,7 +16,13 @@ export class ApuracaoController {
     , private modalControler: ModalController, private provider: ApuracaoProvider) {
     // this.montarTabelaInicial();
 
-    this.provider.listarTodos();
+    // this.provider.listAll().then(
+    //   () => {
+    //     this.provider.toFilter();
+    //   }
+    // );
+
+    this.provider.toConsult2();
   }
 
   // private montarTabelaInicial() {

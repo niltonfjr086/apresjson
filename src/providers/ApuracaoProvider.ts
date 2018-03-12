@@ -8,6 +8,9 @@ export class ApuracaoProvider extends GenericProvider<ProgramaOcorrencia> {
 
   constructor(public http: HttpClient) {
     super(http, '../../assets/base-json/dados.json');
+
+    this._objectToFilter = new ProgramaOcorrencia("Teste", 2020, "Teste2", "Teste3", "Teste4", 5, 10000, 20000);
+
   }
 
 }

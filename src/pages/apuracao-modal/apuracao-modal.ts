@@ -15,6 +15,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class ApuracaoModalPage {
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private view: ViewController) {
   }
