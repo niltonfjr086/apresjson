@@ -12,6 +12,8 @@ import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
 })
 export class ApuracaoController {
 
+  public search=2008;
+
   constructor(public navCtrl: NavController, private basejson: BasejsonProvider
     , private modalControler: ModalController, private provider: ApuracaoProvider) {
     // this.montarTabelaInicial();
@@ -22,7 +24,7 @@ export class ApuracaoController {
     //   }
     // );
 
-    this.provider.toConsult2();
+    // this.provider.toConsult2();
   }
 
   // private montarTabelaInicial() {
@@ -32,15 +34,16 @@ export class ApuracaoController {
   // }
 
   openModal() {
-    // this.basejson.listarTodos().then(
+    // this.provider.listAll().then(
     //   () => {
-    //     const filtroModal = this.modalControler.create('ListaFiltroPage');
+    //     const filtroModal = this.modalControler.create('ApuracaoModalPage');
     //     filtroModal.present();
     //   }
     // );
 
     const filtroModal = this.modalControler.create('ApuracaoModalPage');
     filtroModal.present();
+
   }
 
 

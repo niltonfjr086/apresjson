@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { ProgramaOcorrencia } from '../../entities/ProgramaOcorrencia';
+import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
 
-/**
- * Generated class for the ApuracaoModalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,9 +11,10 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class ApuracaoModalPage {
 
-
   constructor(public navCtrl: NavController, public navParams: NavParams
-  , private view: ViewController) {
+    , private view: ViewController, private provider: ApuracaoProvider) {
+
+
   }
 
   ionViewDidLoad() {

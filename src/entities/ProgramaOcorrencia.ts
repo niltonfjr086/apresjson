@@ -10,17 +10,19 @@ export class ProgramaOcorrencia {
 	private _valor_subvencionado: number;
 
 
-	constructor(nom_programa: string, ano: number, microrregiao: string, regional: string, municipio: string, familias_atendidas: number, valor_financiado: number, valor_subvencionado: number) {
-		this._nom_programa = nom_programa;
-		this._ano = ano;
-		this._microrregiao = microrregiao;
-		this._regional = regional;
-		this._municipio = municipio;
-		this._familias_atendidas = familias_atendidas;
-		this._valor_financiado = valor_financiado;
-		this._valor_subvencionado = valor_subvencionado;
-	}
+	// constructor(nom_programa: string, ano: number, microrregiao: string, regional: string, municipio: string, familias_atendidas: number, valor_financiado: number, valor_subvencionado: number) {
+	// 	this._nom_programa = nom_programa;
+	// 	this._ano = ano;
+	// 	this._microrregiao = microrregiao;
+	// 	this._regional = regional;
+	// 	this._municipio = municipio;
+	// 	this._familias_atendidas = familias_atendidas;
+	// 	this._valor_financiado = valor_financiado;
+	// 	this._valor_subvencionado = valor_subvencionado;
+	// }
 
+	constructor() {
+	}
 
 	public get nom_programa(): string {
 		return this._nom_programa;

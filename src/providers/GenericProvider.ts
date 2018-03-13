@@ -2,17 +2,29 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GenericFilter } from './GenericFilter';
 import { ProgramaOcorrencia } from '../entities/ProgramaOcorrencia';
+import { DropDownSelect } from './DropDownSelect';
 
 @Injectable()
 export abstract class GenericProvider<T> {
 
-    protected _objectToFilter: T;
-    protected _objectToViewSelects: GenericFilter<T>;
-    private _list: T[];
+    private _objectToFilter: any = {};
+    private _list: T[] = [];
+
+    private _viewSelects: DropDownSelect<T>;
     private _filter: GenericFilter<T>;
 
     constructor(public http: HttpClient, protected basePath: string) {
+        // this._objectToFilter = new T();
+        this._viewSelects = new DropDownSelect<T>(this);
         this._filter = new GenericFilter<T>();
+    }
+
+    public get objectToFilter(): T {
+        return this._objectToFilter;
+    }
+
+    public set objectToFilter(value: T) {
+        this._objectToFilter = value;
     }
 
     public get list(): T[] {
@@ -21,6 +33,15 @@ export abstract class GenericProvider<T> {
 
     public set list(value: T[]) {
         this._list = value;
+    }
+
+
+    public get viewSelects(): DropDownSelect<T> {
+        return this._viewSelects;
+    }
+
+    public set viewSelects(value: DropDownSelect<T>) {
+        this._viewSelects = value;
     }
 
     public get filter(): GenericFilter<T> {
@@ -35,26 +56,10 @@ export abstract class GenericProvider<T> {
         this._filter.toMakeFilter(this._objectToFilter);
     }
 
-    protected toConsult() {
+    public toConsult() {
         return new Promise(resolve => {
             this.http.get(this.basePath).subscribe(
                 (retorno) => {
-                    // this._filtro.montarFiltro(retorno[0]);
-
-                    (<T[]>retorno).forEach(element => {
-
-
-                        for (let i in element) {
-
-                            // console.log(typeof element[i] + " | " + element[i]);
-
-                            // if (typeof element[i] !== "number") {
-                            //   element[i] = (<number>0);
-                            // if (typeof element[i] !== "number" && typeof e) {
-                            //     element[i] = (<number>0);
-                            // }
-                        }
-                    });
                     resolve(retorno);
                 }, err => {
                     console.log(err);
@@ -68,11 +73,11 @@ export abstract class GenericProvider<T> {
         headers.append('Content-Type', 'application/json');
         let params = new HttpParams();
         for (let p in obj) {
-            console.log(p + " | "+ obj[p]);
+            console.log(p + " | " + obj[p]);
             params.set(p, obj[p]);
         }
         return new Promise(resolve => {
-            this.http.get(this.basePath, {headers: headers, params: params}).subscribe(
+            this.http.get(this.basePath, { headers: headers, params: params }).subscribe(
                 (retorno) => {
                     console.log(<ProgramaOcorrencia[]>retorno);
                     resolve(retorno);
@@ -86,8 +91,6 @@ export abstract class GenericProvider<T> {
         return this.toConsult()
             .then((retorno) => {
                 this._list = <T[]>retorno;
-
-                // console.log(this._list);
             })
             .catch((e) => { console.error(e) });
     }

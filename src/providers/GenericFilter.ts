@@ -1,14 +1,9 @@
 export class GenericFilter<T> {
 
-    // private objectToFilter: T;
     private _criteries: Critery[] = [];
 
     constructor() {
     }
-    // constructor(objectToFilter: T) {
-    //     this._objectToFilter = objectToFilter;
-    // }
-
 
     public get criteries(): Critery[] {
         return this._criteries;
@@ -20,22 +15,25 @@ export class GenericFilter<T> {
 
     public toMakeFilter(objectToFilter: T): void {
         for (let attribute in objectToFilter) {
-            if (attribute && typeof attribute !== "function" && attribute.startsWith("_")) {
-                this._criteries.push(new Critery(attribute, objectToFilter[attribute].toString()));
+            if (objectToFilter[attribute] && typeof attribute !== "function" && !attribute.startsWith("_")) {
+                this._criteries.push(new Critery(attribute, objectToFilter[attribute]));
             }
         }
-        console.log(this._criteries);
+
+        this._criteries.forEach(element => {
+            console.log(element);
+        });
     }
 
 
 
 }
 
-class Critery {
+export class Critery {
     private _field: string;
     private _value: any;
 
-    constructor(field: string, value: string) {
+    constructor(field: string, value: any) {
         this._field = field;
         this._value = value;
     }
