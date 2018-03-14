@@ -6,15 +6,13 @@ import { DropDownSelect } from './DropDownSelect';
 
 @Injectable()
 export abstract class GenericProvider<T> {
-
     private _objectToFilter: any = {};
     private _list: T[] = [];
 
     private _viewSelects: DropDownSelect<T>;
     private _filter: GenericFilter<T>;
 
-    constructor(public http: HttpClient, protected basePath: string) {
-        // this._objectToFilter = new T();
+    constructor(public http: HttpClient, protected basePath: string, protected modelo: T) {
         this._viewSelects = new DropDownSelect<T>(this);
         this._filter = new GenericFilter<T>();
     }
@@ -34,7 +32,6 @@ export abstract class GenericProvider<T> {
     public set list(value: T[]) {
         this._list = value;
     }
-
 
     public get viewSelects(): DropDownSelect<T> {
         return this._viewSelects;
@@ -56,7 +53,7 @@ export abstract class GenericProvider<T> {
         this._filter.toMakeFilter(this._objectToFilter);
     }
 
-    public toConsult() {
+    private toConsult() {
         return new Promise(resolve => {
             this.http.get(this.basePath).subscribe(
                 (retorno) => {
@@ -91,7 +88,41 @@ export abstract class GenericProvider<T> {
         return this.toConsult()
             .then((retorno) => {
                 this._list = <T[]>retorno;
+
+                this._list.forEach(e => {
+                    for (const key in e) {
+                        if (typeof this.modelo[key] === "number" && <any>e[key] === "NULL") {
+                            e[key] = <any>0;
+                        }
+                    }
+                });
+                console.log(this._list);
             })
+            .catch((e) => { console.error(e) });
+    }
+
+    public toFilterConsult() {
+        this._filter.toMakeFilter(this._objectToFilter);
+        return this.listAll()
+            .then(
+                () => {
+                    this.filter.criteries.forEach(element => {
+
+                    });
+                    console.log(this._filter.criteries);
+
+                    let filteredList: T[];
+
+                    this._list.forEach(element => {
+                        for (let a in element) {
+                            // if (this._filter.criteries["field"][a]) {
+                            //     filteredList.push(element);
+                            // }
+                        }
+
+                    });
+                }
+            )
             .catch((e) => { console.error(e) });
     }
 

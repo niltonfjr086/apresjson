@@ -21,7 +21,7 @@ export class GenericFilter<T> {
         }
 
         this._criteries.forEach(element => {
-            console.log(element);
+            // console.log(element);
         });
     }
 

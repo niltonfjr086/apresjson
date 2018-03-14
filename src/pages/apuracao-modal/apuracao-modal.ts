@@ -11,14 +11,28 @@ import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
 })
 export class ApuracaoModalPage {
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams
     , private view: ViewController, private provider: ApuracaoProvider) {
 
+      console.log(provider.objectToFilter);
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ApuracaoModalPage');
+  }
+
+  public buscar() {
+    console.log("buscando");
+
+    this.provider.toFilterConsult()
+      .then(
+        () => {
+          this.closeModal();
+        }
+      )
+      .catch()
   }
 
   closeModal() {

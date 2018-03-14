@@ -19,16 +19,6 @@ export class DropDownSelect<T> extends GenericFilter<T> {
             }
         }
 
-        let qlqrCoisa = this.provider.listAll()
-            .then(
-                () => {
-                    console.log(qlqrCoisa);
-                }
-            )
-            .catch();
-
-        // console.log(qlqrCoisa);
-
 
         // for (let attribute in objectToFilter) {
 

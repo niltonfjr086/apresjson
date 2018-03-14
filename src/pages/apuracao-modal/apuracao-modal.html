@@ -26,6 +26,15 @@
         <ion-option>SC Rural</ion-option>
       </ion-select>
     </ion-item>
+
+    <ion-item>
+      <ion-label floating>Ano</ion-label>
+      <ion-datetime displayFormat="YYYY" name="ano" [(ngModel)]="provider.objectToFilter.ano"></ion-datetime>
+    </ion-item>
+
+    <ion-buttons end>
+      <button ion-button color="dark" (click)="buscar()">Buscar</button>
+    </ion-buttons>
   </form>
 
 </ion-content>
