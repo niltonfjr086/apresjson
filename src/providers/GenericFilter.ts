@@ -30,19 +30,19 @@ export class GenericFilter<T> {
 }
 
 export class Critery {
-    private _field: string;
+    private _field: any;
     private _value: any;
 
-    constructor(field: string, value: any) {
+    constructor(field: any, value: any) {
         this._field = field;
         this._value = value;
     }
 
-    public get field(): string {
+    public get field(): any {
         return this._field;
     }
 
-    public set field(value: string) {
+    public set field(value: any) {
         this._field = value;
     }
 
