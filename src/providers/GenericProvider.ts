@@ -6,51 +6,15 @@ import { DropDownSelect } from './DropDownSelect';
 
 @Injectable()
 export abstract class GenericProvider<T> {
-    private _objectToFilter: any = {};
-    private _list: T[] = [];
+    private _filter: any = {};
+    private _fullList: T[] = [];
+    private _viewList: T[] = [];
 
-    private _viewSelects: DropDownSelect<T>;
-    private _filter: GenericFilter<T>;
+    private _viewSelects = { f: [], w: [] };
 
     constructor(public http: HttpClient, protected basePath: string, protected modelo: T) {
-        this._viewSelects = new DropDownSelect<T>(this);
-        this._filter = new GenericFilter<T>();
-    }
-
-    public get objectToFilter(): T {
-        return this._objectToFilter;
-    }
-
-    public set objectToFilter(value: T) {
-        this._objectToFilter = value;
-    }
-
-    public get list(): T[] {
-        return this._list;
-    }
-
-    public set list(value: T[]) {
-        this._list = value;
-    }
-
-    public get viewSelects(): DropDownSelect<T> {
-        return this._viewSelects;
-    }
-
-    public set viewSelects(value: DropDownSelect<T>) {
-        this._viewSelects = value;
-    }
-
-    public get filter(): GenericFilter<T> {
-        return this._filter;
-    }
-
-    public set filter(value: GenericFilter<T>) {
-        this._filter = value;
-    }
-
-    public toFilter() {
-        this._filter.toMakeFilter(this._objectToFilter);
+        // this._viewSelects = new DropDownSelect<T>(this);
+        // this._filter = new GenericFilter<T>();
     }
 
     private toConsult() {
@@ -64,7 +28,7 @@ export abstract class GenericProvider<T> {
         })
     }
 
-    public toConsult2() {
+    private toConsult2() {
         let obj = { nom_programa: "Fomento Geral" };
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
@@ -87,33 +51,29 @@ export abstract class GenericProvider<T> {
     public listAll() {
         return this.toConsult()
             .then((retorno) => {
-                this._list = <T[]>retorno;
+                this._fullList = <T[]>retorno;
 
-                this._list.forEach(e => {
+                this._fullList.forEach(e => {
                     for (const key in e) {
                         if (typeof this.modelo[key] === "number" && <any>e[key] === "NULL") {
                             e[key] = <any>0;
                         }
                     }
                 });
-                console.log(this._list);
+                console.log(this._fullList);
             })
             .catch((e) => { console.error(e) });
     }
 
     public toFilterConsult() {
-        this._filter.toMakeFilter(this._objectToFilter);
+        this._filter.toMakeFilter(this._filter);
         return this.listAll()
             .then(
                 () => {
-                    this.filter.criteries.forEach(element => {
-
-                    });
-                    console.log(this._filter.criteries);
 
                     let filteredList: T[];
 
-                    this._list.forEach(element => {
+                    this._fullList.forEach(element => {
                         for (let a in element) {
                             // if (this._filter.criteries["field"][a]) {
                             //     filteredList.push(element);
@@ -127,7 +87,7 @@ export abstract class GenericProvider<T> {
     }
 
     private loadViewSelects() {
-        this._list.forEach(element => {
+        this._fullList.forEach(element => {
 
             for (let attribute in element) {
 
@@ -137,6 +97,49 @@ export abstract class GenericProvider<T> {
             // }
         });
     }
+
+    private filtrar() {
+        this._viewList = [];
+
+        let lastKey = 0;
+        for (const key in filter) {
+            lastKey++;
+        }
+
+        this._fullList.forEach(element => {
+
+            let index = 1;
+            for (const key in this._filter) {
+
+                if (element[key] === this._filter[key] || this._filter[key] === null || this._filter[key] === undefined) {
+                    if (index === lastKey) {
+                        this._viewList.push(element);
+                        break;
+                    }
+                    index++;
+                    continue;
+
+                } else {
+                    break;
+                }
+            }
+        });
+
+    }
+
+
+
+    private constroiSelects() {
+        for (let i = 0; i < this._viewList.length; i++) {
+            for (let a in this._viewList[i]) {
+                // if (this._viewSelects[a].indexOf(this._viewList[i][a]) < 0) {
+                //     this._viewSelects[a].push(this._viewList[i][a]);
+                // }
+            }
+        }
+    }
+    // constroiSelects();
+    // console.log(viewSelects);
 
 
 
