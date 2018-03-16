@@ -1,20 +1,43 @@
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GenericFilter } from './GenericFilter';
-import { ProgramaOcorrencia } from '../entities/ProgramaOcorrencia';
-import { DropDownSelect } from './DropDownSelect';
 
 @Injectable()
 export abstract class GenericProvider<T> {
-    private _filter: any = {};
+    public _filter: any = {};
     private _fullList: T[] = [];
     private _viewList: T[] = [];
 
-    private _viewSelects = { f: [], w: [] };
+    private _viewSelects = {};
 
     constructor(public http: HttpClient, protected basePath: string, protected modelo: T) {
-        // this._viewSelects = new DropDownSelect<T>(this);
-        // this._filter = new GenericFilter<T>();
+
+        this.toResolveSelect();
+
+    }
+
+
+    public get filter(): any {
+        return this._filter;
+    }
+
+    public set filter(value: any) {
+        this._filter = value;
+    }
+
+
+    public get viewList(): T[] {
+        return this._viewList;
+    }
+
+    public set viewList(value: T[]) {
+        this._viewList = value;
+    }
+
+    private toResolveSelect() {
+        Object.assign(this._viewSelects, this.modelo);
+        for (let a in this._viewSelects) {
+            this._viewSelects[a] = [];
+        }
     }
 
     private toConsult() {
@@ -28,25 +51,27 @@ export abstract class GenericProvider<T> {
         })
     }
 
-    private toConsult2() {
-        let obj = { nom_programa: "Fomento Geral" };
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        let params = new HttpParams();
-        for (let p in obj) {
-            console.log(p + " | " + obj[p]);
-            params.set(p, obj[p]);
-        }
-        return new Promise(resolve => {
-            this.http.get(this.basePath, { headers: headers, params: params }).subscribe(
-                (retorno) => {
-                    console.log(<ProgramaOcorrencia[]>retorno);
-                    resolve(retorno);
-                }, err => {
-                    console.log(err);
-                });
-        })
-    }
+    // Consultar um WebService é mais simples, a lógica de busca na base de dados é abstraída com parâmetros na URL
+    // private toConsultExternalWS() {
+    //     let obj = { nom_programa: "Fomento Geral" };
+    //     let headers = new HttpHeaders();
+    //     headers.append('Content-Type', 'application/json');
+    //     let params = new HttpParams();
+    //     for (let p in obj) {
+    //         console.log(p + " | " + obj[p]);
+    //         params.set(p, obj[p]);
+    //     }
+    //     return new Promise(resolve => {
+    //         this.http.get(this.basePath, { headers: headers, params: params }).subscribe(
+    //             (retorno) => {
+    //                 console.log(<T[]>retorno);
+    //                 resolve(retorno);
+    //             }, err => {
+    //                 console.log(err);
+    //             });
+    //     })
+    // }
+
 
     public listAll() {
         return this.toConsult()
@@ -60,87 +85,84 @@ export abstract class GenericProvider<T> {
                         }
                     }
                 });
-                console.log(this._fullList);
             })
             .catch((e) => { console.error(e) });
     }
 
-    public toFilterConsult() {
-        this._filter.toMakeFilter(this._filter);
+    public toFilter() {
         return this.listAll()
             .then(
                 () => {
 
-                    let filteredList: T[];
+                    let lastKey = 0;
+                    for (const key in this._filter) {
+                        lastKey++;
+                    }
+                    if (lastKey === 0) {
+                        this._viewList = this._fullList;
+                        return;
+                    }
 
+                    this._viewList = [];
                     this._fullList.forEach(element => {
-                        for (let a in element) {
-                            // if (this._filter.criteries["field"][a]) {
-                            //     filteredList.push(element);
-                            // }
-                        }
 
+                        let index = 1;
+                        for (const key in this._filter) {
+
+                            if (element[key] == this._filter[key] || this._filter[key] === null || this._filter[key] === undefined) {
+                                if (index === lastKey) {
+                                    this._viewList.push(element);
+                                    break;
+                                }
+                                index++;
+                                continue;
+
+                            } else {
+                                break;
+                            }
+
+                        }
                     });
                 }
             )
             .catch((e) => { console.error(e) });
     }
 
-    private loadViewSelects() {
-        this._fullList.forEach(element => {
+    public toBuildSelects() {
 
-            for (let attribute in element) {
+        return this.toFilter()
+            .then(
+                
+                () => {
+                    this.toResolveSelect();
+                    // for (let a in this._viewList[0]) {
+                    //     console.log("Atributo: " + a + " | " + "TYPEOF: " + typeof a);
+                    //     console.log("VALOR: " + a + " | " + "TYPEOF: " + typeof this._viewSelects[<string>a]);
+                    //     console.log("VALOR: " + this._viewList[0][a] + " | " + "TYPEOF: " + typeof this._viewList[0][a]);
 
-            }
-            // if (this._listaNomes.indexOf(element.nom_programa) < 0) {
-            //     this._listaNomes.push(element.nom_programa);
-            // }
-        });
-    }
-
-    private filtrar() {
-        this._viewList = [];
-
-        let lastKey = 0;
-        for (const key in filter) {
-            lastKey++;
-        }
-
-        this._fullList.forEach(element => {
-
-            let index = 1;
-            for (const key in this._filter) {
-
-                if (element[key] === this._filter[key] || this._filter[key] === null || this._filter[key] === undefined) {
-                    if (index === lastKey) {
-                        this._viewList.push(element);
-                        break;
+                    // }
+                    for (let a in this._viewSelects) {
+                        console.log("Atributo: " + a + " | " + "TYPEOF: " + typeof a);
+                        console.log("VALOR: " + this._viewSelects[a] + " | " + "TYPEOF: " + typeof this._viewSelects[a]);
+                        console.log("VALOR: " + this._viewList[0][a] + " | " + "TYPEOF: " + typeof this._viewList[0][a]);
                     }
-                    index++;
-                    continue;
 
-                } else {
-                    break;
+
+
+                    for (let i = 0; i < this._viewList.length; i++) {
+                        for (let a in this._viewList[i]) {
+                            // if (this._viewSelects[<string>a].indexOf(this._viewList[i][a]) < 0) {
+                            //     this._viewSelects[<string>a].push(this._viewList[i][a]);
+                            // }
+                        }
+                    }
                 }
-            }
-        });
-
+            )
+            .catch((e) => { console.error(e) })
     }
 
-
-
-    private constroiSelects() {
-        for (let i = 0; i < this._viewList.length; i++) {
-            for (let a in this._viewList[i]) {
-                // if (this._viewSelects[a].indexOf(this._viewList[i][a]) < 0) {
-                //     this._viewSelects[a].push(this._viewList[i][a]);
-                // }
-            }
-        }
+    public tt() {
+        console.log("OK");
     }
-    // constroiSelects();
-    // console.log(viewSelects);
-
-
 
 }

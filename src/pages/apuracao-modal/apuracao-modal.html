@@ -21,7 +21,7 @@
   <form>
     <ion-item>
       <ion-label floating>Nome do Programa</ion-label>
-      <ion-select name="nome" [(ngModel)]="provider.objectToFilter.nom_programa">
+      <ion-select name="nome" [(ngModel)]="provider._filter.nom_programa">
         <!-- <ion-option *ngFor="let item of provider.list" [value]="item">{{ item }}</ion-option> -->
         <ion-option>SC Rural</ion-option>
       </ion-select>
@@ -29,10 +29,11 @@
 
     <ion-item>
       <ion-label floating>Ano</ion-label>
-      <ion-datetime displayFormat="YYYY" name="ano" [(ngModel)]="provider.objectToFilter.ano"></ion-datetime>
+      <ion-datetime displayFormat="YYYY" min="2010" max="2020" name="ano" [(ngModel)]="provider._filter.ano"></ion-datetime>
     </ion-item>
 
     <ion-buttons end>
+      <button ion-button color="dark" (click)="limpar()">Limpar</button>
       <button ion-button color="dark" (click)="buscar()">Buscar</button>
     </ion-buttons>
   </form>

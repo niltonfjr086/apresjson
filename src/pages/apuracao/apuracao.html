@@ -18,12 +18,12 @@
       <ion-col>Valor Financiado</ion-col>
     </ion-row>
 
-    <!-- <ion-row text-center wrap *ngFor="let item of provider.list; let i = index" value="item" [class]="i % 2 === 0 ? 'row grifado' : 'row'">
+    <ion-row text-center wrap *ngFor="let item of provider.viewList; let i = index" value="item" [class]="i % 2 === 0 ? 'row grifado' : 'row'">
       <ion-col>{{ item.nom_programa }}</ion-col>
       <ion-col>{{ item.ano }}</ion-col>
       <ion-col>{{ item.municipio }}</ion-col>
       <ion-col>{{ item.valor_financiado | currency : " " : 2}}</ion-col>
-    </ion-row> -->
+    </ion-row>
 
   </ion-grid>
 </ion-content>
