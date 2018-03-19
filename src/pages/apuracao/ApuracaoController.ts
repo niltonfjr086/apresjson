@@ -12,8 +12,6 @@ import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
 })
 export class ApuracaoController {
 
-  public search=2008;
-
   constructor(public navCtrl: NavController, private basejson: BasejsonProvider
     , private modalControler: ModalController, private provider: ApuracaoProvider) {
     // this.montarTabelaInicial();

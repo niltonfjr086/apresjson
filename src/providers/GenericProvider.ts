@@ -36,8 +36,9 @@ export abstract class GenericProvider<T> {
     private toResolveSelect() {
         Object.assign(this._viewSelects, this.modelo);
         for (let a in this._viewSelects) {
-            this._viewSelects[a] = [];
+            // this._viewSelects[a] = [];
         }
+        // console.log(this._viewSelects);
     }
 
     private toConsult() {
@@ -98,10 +99,11 @@ export abstract class GenericProvider<T> {
                     for (const key in this._filter) {
                         lastKey++;
                     }
-                    if (lastKey === 0) {
-                        this._viewList = this._fullList;
-                        return;
-                    }
+
+                    // if (lastKey === 0) {
+                    //     this._viewList = this._fullList;
+                    //     return;
+                    // }
 
                     this._viewList = [];
                     this._fullList.forEach(element => {
@@ -132,7 +134,7 @@ export abstract class GenericProvider<T> {
 
         return this.toFilter()
             .then(
-                
+
                 () => {
                     this.toResolveSelect();
                     // for (let a in this._viewList[0]) {
