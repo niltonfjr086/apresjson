@@ -15,8 +15,6 @@ export class ApuracaoModalPage {
   constructor(public navCtrl: NavController, public navParams: NavParams
     , private view: ViewController, private provider: ApuracaoProvider) {
 
-    // console.log(provider.filter);
-
   }
 
   ionViewDidLoad() {
@@ -28,13 +26,13 @@ export class ApuracaoModalPage {
   }
 
   public buscar() {
-    this.provider.toBuildSelects()
+    this.provider.toBuild()
       .then(
         () => {
           this.closeModal();
         }
       )
-      .catch()
+      .catch((e) => { console.error(e) })
   }
 
   closeModal() {

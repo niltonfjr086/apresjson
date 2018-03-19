@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
-import { BasejsonProvider } from '../../providers/basejson/basejson';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-about',
@@ -8,17 +7,57 @@ import { BasejsonProvider } from '../../providers/basejson/basejson';
 })
 export class ListaPage {
 
-  constructor(private modal: ModalController, public navCtrl: NavController, public basejson: BasejsonProvider) {
+  items: any = [];
+  itemExpandHeight: number = 100;
+
+  constructor(public navCtrl: NavController) {
+
+    this.items = [
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false }
+    ];
 
   }
 
-  openModal() {
-    this.basejson.listarTodos().then(
-      () => {
-        const filtroModal = this.modal.create('ListaFiltroPage');
-        filtroModal.present();
+  public expandItem(item) {
+
+    this.items.map((listItem) => {
+
+      if (item == listItem) {
+        listItem.expanded = !listItem.expanded;
+      } else {
+        listItem.expanded = false;
       }
-    );
+
+      return listItem;
+
+    });
+
   }
+
+  filtro = {
+    expanded: false
+  }
+  public expand() {
+
+    if (this.filtro.expanded) {
+      this.filtro.expanded = false;
+    } else {
+      this.filtro.expanded = true;
+
+    }
+
+  }
+
+
+
+
 
 }

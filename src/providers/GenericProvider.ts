@@ -3,18 +3,20 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export abstract class GenericProvider<T> {
-    public _filter: any = {};
+
     private _fullList: T[] = [];
+
+    public _filter: any = {};
     private _viewList: T[] = [];
 
-    private _viewSelects = {};
+    public _viewSelects = {};
+    public _viewSumReduces = {};
 
     constructor(public http: HttpClient, protected basePath: string, protected modelo: T) {
 
-        this.toResolveSelect();
+        this.toResolveViewComponents();
 
     }
-
 
     public get filter(): any {
         return this._filter;
@@ -24,7 +26,6 @@ export abstract class GenericProvider<T> {
         this._filter = value;
     }
 
-
     public get viewList(): T[] {
         return this._viewList;
     }
@@ -33,12 +34,36 @@ export abstract class GenericProvider<T> {
         this._viewList = value;
     }
 
+    public get viewSelects(): any {
+        return this._viewSelects;
+    }
+
+    public set viewSelects(value: any) {
+        this._viewSelects = value;
+    }
+
+    public get viewSumReduces(): any {
+        return this._viewSumReduces;
+    }
+
+    public set viewSumReduces(value: any) {
+        this._viewSumReduces = value;
+    }
+
     private toResolveSelect() {
         Object.assign(this._viewSelects, this.modelo);
         for (let a in this._viewSelects) {
-            // this._viewSelects[a] = [];
+            this._viewSelects[a] = [];
         }
-        // console.log(this._viewSelects);
+    }
+
+    private toResolveSum() {
+        Object.assign(this._viewSumReduces, this.modelo);
+    }
+
+    private toResolveViewComponents() {
+        this.toResolveSelect();
+        this.toResolveSum();
     }
 
     private toConsult() {
@@ -130,41 +155,37 @@ export abstract class GenericProvider<T> {
             .catch((e) => { console.error(e) });
     }
 
-    public toBuildSelects() {
+    public toBuild() {
 
         return this.toFilter()
             .then(
-
                 () => {
-                    this.toResolveSelect();
-                    // for (let a in this._viewList[0]) {
-                    //     console.log("Atributo: " + a + " | " + "TYPEOF: " + typeof a);
-                    //     console.log("VALOR: " + a + " | " + "TYPEOF: " + typeof this._viewSelects[<string>a]);
-                    //     console.log("VALOR: " + this._viewList[0][a] + " | " + "TYPEOF: " + typeof this._viewList[0][a]);
+                    let manipulated = [];
 
-                    // }
-                    for (let a in this._viewSelects) {
-                        console.log("Atributo: " + a + " | " + "TYPEOF: " + typeof a);
-                        console.log("VALOR: " + this._viewSelects[a] + " | " + "TYPEOF: " + typeof this._viewSelects[a]);
-                        console.log("VALOR: " + this._viewList[0][a] + " | " + "TYPEOF: " + typeof this._viewList[0][a]);
+                    if (this._viewList.length > 0) {
+                        manipulated = this._viewList;
+                    } else {
+                        manipulated = this._fullList;
                     }
 
+                    this.toResolveSum();
 
+                    for (let i = 0; i < manipulated.length; i++) {
+                        for (let a in manipulated[i]) {
 
-                    for (let i = 0; i < this._viewList.length; i++) {
-                        for (let a in this._viewList[i]) {
-                            // if (this._viewSelects[<string>a].indexOf(this._viewList[i][a]) < 0) {
-                            //     this._viewSelects[<string>a].push(this._viewList[i][a]);
-                            // }
+                            if (this._viewSelects[<string>a].indexOf(manipulated[i][a]) < 0) {
+                                this._viewSelects[<string>a].push(manipulated[i][a]);
+                            }
+                            if (typeof manipulated[i][a] === "number") {
+                                this._viewSumReduces[<string>a] += manipulated[i][a];
+                            }
                         }
                     }
+                    console.log(this._viewSelects);
+                    console.log(this._viewSumReduces);
                 }
             )
             .catch((e) => { console.error(e) })
-    }
-
-    public tt() {
-        console.log("OK");
     }
 
 }

@@ -1,35 +1,29 @@
 <ion-header>
   <ion-navbar>
+
     <ion-title>Lista</ion-title>
+
     <ion-buttons end>
-      <button ion-button (click)="openModal()">
+      <button ion-button (click)="expand()">
         <ion-icon name="funnel"></ion-icon>
       </button>
     </ion-buttons>
+
   </ion-navbar>
+
+  <div ion-item>
+    <list-expandable [expandHeight]="itemExpandHeight" [expanded]="filtro.expanded">
+      <ion-item>
+        <ion-label floating>Nome do Programa</ion-label>
+        <ion-select name="nome">
+          <ion-option>SC Rural</ion-option>
+        </ion-select>
+      </ion-item>
+    </list-expandable>
+  </div>
 </ion-header>
 
 <ion-content padding>
-
-  <ion-grid>
-
-    <ion-row text-center wrap class="cabecalho">
-      <ion-col>Nome Programa</ion-col>
-      <ion-col>Ano</ion-col>
-      <ion-col>Município</ion-col>
-      <ion-col>Valor Financiado</ion-col>
-    </ion-row>
-
-    <ion-row text-center wrap *ngFor="let item of basejson.listaFiltrada; let i = index" value="item">
-      <ion-col class="celula">{{ item.nom_programa }}</ion-col>
-      <ion-col class="celula">{{ item.ano }}</ion-col>
-      <ion-col class="celula">{{ item.municipio }}</ion-col>
-
-      <!-- <ion-col class="celula">{{ item.valor_financiado }}</ion-col> -->
-      <ion-col class="celula">{{ item.valor_financiado | currency : " " : 2}}</ion-col>
-    </ion-row>
-
-  </ion-grid>
 
 
 

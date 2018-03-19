@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { ProgramaOcorrencia } from '../../entities/ProgramaOcorrencia';
 
-import { BasejsonProvider } from '../../providers/basejson/basejson';
-import { Filtro } from '../../providers/basejson/filtrojson';
 import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
 
 @Component({
@@ -12,35 +10,19 @@ import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
 })
 export class ApuracaoController {
 
-  constructor(public navCtrl: NavController, private basejson: BasejsonProvider
-    , private modalControler: ModalController, private provider: ApuracaoProvider) {
-    // this.montarTabelaInicial();
+  constructor(public navCtrl: NavController , private modalControler: ModalController, private provider: ApuracaoProvider) {
 
-    // this.provider.listAll().then(
-    //   () => {
-    //     this.provider.toFilter();
-    //   }
-    // );
-
-    // this.provider.toConsult2();
   }
 
-  // private montarTabelaInicial() {
-  //   this.basejson.listarTodos().then(
-  //     () => { console.log(this.basejson.lista); }
-  //   );
-  // }
-
   openModal() {
-    // this.provider.listAll().then(
-    //   () => {
-    //     const filtroModal = this.modalControler.create('ApuracaoModalPage');
-    //     filtroModal.present();
-    //   }
-    // );
 
-    const filtroModal = this.modalControler.create('ApuracaoModalPage');
-    filtroModal.present();
+    this.provider.toBuild()
+      .then(
+        () => {
+          const filtroModal = this.modalControler.create('ApuracaoModalPage');
+          filtroModal.present();
+        }
+      );
 
   }
 

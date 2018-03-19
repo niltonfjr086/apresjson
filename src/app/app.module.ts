@@ -18,9 +18,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
-import { BasejsonProvider } from '../providers/basejson/basejson';
-import { ListaFiltroPageModule } from '../pages/lista-filtro/lista-filtro.module';
 import { ApuracaoProvider } from '../providers/ApuracaoProvider';
+import { ListExpandableComponent } from '../components/list-expandable/list-expandable';
 
 
 @NgModule({
@@ -29,14 +28,14 @@ import { ApuracaoProvider } from '../providers/ApuracaoProvider';
     ListaPage,
     DetalhesPage,
     ApuracaoController,
-    TabsPage
+    TabsPage,
+    ListExpandableComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
-    ListaFiltroPageModule,
     ApuracaoModalPageModule
   ],
   bootstrap: [IonicApp],
@@ -46,12 +45,12 @@ import { ApuracaoProvider } from '../providers/ApuracaoProvider';
     DetalhesPage,
     ApuracaoController,
     TabsPage
+    , ListExpandableComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    BasejsonProvider,
     ApuracaoProvider
   ]
 })
