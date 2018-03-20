@@ -1,3 +1,32 @@
 <div #expandWrapper class='expand-wrapper' [class.collapsed]="!expanded">
-  <ng-content></ng-content>
+
+  <form>
+    <ion-item>
+      <ion-label floating>Nome do Programa</ion-label>
+      <ion-select name="nome" [(ngModel)]="provider._filter.nom_programa">
+        <ion-option *ngFor="let item of provider.viewSelects['nom_programa']" [value]="item">{{ item }}</ion-option>
+        <!-- <ion-option>SC Rural</ion-option> -->
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Município</ion-label>
+      <ion-select name="municipio" [(ngModel)]="provider._filter.municipio">
+        <ion-option *ngFor="let item of provider.viewSelects['municipio']" [value]="item">{{ item }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Ano</ion-label>
+      <ion-select name="ano" [(ngModel)]="provider._filter.ano">
+        <ion-option *ngFor="let item of provider.viewSelects['ano']" [value]="item">{{ item }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-buttons end>
+      <button ion-button color="dark" (click)="limpar()">Limpar</button>
+      <button ion-button color="dark" (click)="buscar()">Buscar</button>
+    </ion-buttons>
+  </form>
+
 </div>

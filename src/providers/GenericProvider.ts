@@ -181,6 +181,9 @@ export abstract class GenericProvider<T> {
                             }
                         }
                     }
+                    for (let a in this._viewSelects) {
+                        this._viewSelects[a].sort();
+                    }
                     console.log(this._viewSelects);
                     console.log(this._viewSumReduces);
                 }

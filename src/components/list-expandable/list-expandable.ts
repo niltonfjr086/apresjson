@@ -1,4 +1,7 @@
-import { Component, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { ListaPage } from '../../pages/lista/lista';
+import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
+import { ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'list-expandable',
@@ -8,14 +11,23 @@ export class ListExpandableComponent {
 
   @ViewChild('expandWrapper', { read: ElementRef }) expandWrapper;
   @Input('expanded') expanded;
-  @Input('expandHeight') expandHeight;
 
-  constructor(public renderer: Renderer) {
+  constructor(private view: ViewController, public listaPage: ListaPage, public provider: ApuracaoProvider) {
 
   }
 
-  ngAfterViewInit() {
-    this.renderer.setElementStyle(this.expandWrapper.nativeElement, 'height', this.expandHeight + 'px');
+  limpar() {
+    for(let b in this.provider._filter){
+      this.provider._filter[b] = null;
+    }
+    this.listaPage.situacao = "Filtro Limpo";
+    this.listaPage.expand();
+
+  }
+
+  buscar() {
+    this.listaPage.situacao = "Filtro Preenchido";
+    this.listaPage.expand();
   }
 
 }
