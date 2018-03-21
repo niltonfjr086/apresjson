@@ -9,12 +9,20 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <ion-label floating>Município</ion-label>
-      <ion-select name="municipio" [(ngModel)]="provider._filter.municipio">
-        <ion-option *ngFor="let item of provider.viewSelects['municipio']" [value]="item">{{ item }}</ion-option>
-      </ion-select>
-    </ion-item>
+
+    <div class="autocomplete">
+      <ion-item>
+        <ion-label floating>Município</ion-label>
+        <ion-input name="municipio" [(ngModel)]="provider._filter.municipio" (input)="search()" (ionFocus)="toggleFocus()" debounce=500>
+        </ion-input>
+      </ion-item>
+
+      <ion-list *ngIf="focus">
+        <ion-item *ngFor="let res of listaFlutuanteMunicipio" (click)="seleciona(res)">
+          {{res}}
+        </ion-item>
+      </ion-list>
+    </div>
 
     <ion-item>
       <ion-label floating>Ano</ion-label>
