@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, ViewController } from 'ionic-angular';
 import { ProgramaOcorrencia } from '../../entities/ProgramaOcorrencia';
 
 import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
+import { AccordionMenuComponent } from '../../components/accordion-menu/accordion-menu';
 
 @Component({
   selector: 'page-home',
@@ -10,8 +11,13 @@ import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
 })
 export class ApuracaoController {
 
-  constructor(public navCtrl: NavController , private modalControler: ModalController, private provider: ApuracaoProvider) {
+  // private _accordionApuracao: AccordionMenuComponent;
 
+  constructor(public navCtrl: NavController, private modalControler: ModalController,
+    private view: ViewController, private provider: ApuracaoProvider) {
+
+    // this._accordionApuracao = new AccordionMenuComponent(view, this, provider);
+    // this._accordionApuracao = accordionApuracao;
   }
 
   openModal() {

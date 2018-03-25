@@ -1,0 +1,43 @@
+accordion-menu {
+
+    .expand-wrapper {
+        transition: 0.3s linear;
+    }   
+
+    .collapsed {
+        height: 0 !important;
+    }
+
+}
+
+.autocomplete {
+	width: 100%;
+
+	ion-input {
+		padding: 1px !important;
+	}
+
+	ion-list {
+		position: absolute;
+		width: inherit;
+		overflow-y: scroll;
+		max-height: 150%;
+		z-index: 999;
+
+		ion-item {
+
+			img {
+				max-height: 2.5rem;
+				width: auto;
+				margin: auto;
+				display: block;
+			}
+		}
+
+		ion-item:hover {
+			cursor: pointer;
+			background: #f1f1f1;
+		}
+	}
+
+}

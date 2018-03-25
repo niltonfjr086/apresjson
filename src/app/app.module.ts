@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler, IonicPageModule } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, IonicPageModule, ViewController } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { ListaPage } from '../pages/lista/lista';
@@ -16,10 +16,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { ApuracaoProvider } from '../providers/ApuracaoProvider';
 import { ListExpandableComponent } from '../components/list-expandable/list-expandable';
+import { AccordionMenuComponent } from '../components/accordion-menu/accordion-menu';
+import { ComponentsModule } from '../components/components.module';
+import { GenericProvider } from '../providers/GenericProvider';
 
 
 @NgModule({
@@ -29,15 +32,10 @@ import { ListExpandableComponent } from '../components/list-expandable/list-expa
     DetalhesPage,
     ApuracaoController,
     TabsPage,
-    ListExpandableComponent
+    ListExpandableComponent,
+    AccordionMenuComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpModule,
-    HttpClientModule,
-    IonicModule.forRoot(MyApp),
-    ApuracaoModalPageModule
-  ],
+
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -45,13 +43,26 @@ import { ListExpandableComponent } from '../components/list-expandable/list-expa
     DetalhesPage,
     ApuracaoController,
     TabsPage
-    , ListExpandableComponent
   ],
+  
+  imports: [
+    BrowserModule,
+    HttpModule,
+    HttpClientModule,
+    IonicModule.forRoot(MyApp),
+    ApuracaoModalPageModule
+  ],
+
+
+
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApuracaoProvider
   ]
+
+
+
 })
 export class AppModule {}

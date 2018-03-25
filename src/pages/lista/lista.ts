@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ViewController } from 'ionic-angular';
 import { ApuracaoProvider } from '../../providers/ApuracaoProvider';
+import { AccordionMenuComponent } from '../../components/accordion-menu/accordion-menu';
 
 @Component({
   selector: 'page-about',
@@ -11,7 +12,12 @@ export class ListaPage {
   private _situacao: string = "Selecione parâmetros do filtro";
   private _isExpanded: boolean = false;
 
-  constructor(public navCtrl: NavController, public provider: ApuracaoProvider) {
+  private _accordionListaPage: AccordionMenuComponent<ApuracaoProvider>;
+
+  constructor(public view: ViewController, public navCtrl: NavController, public provider: ApuracaoProvider) {
+
+    this._accordionListaPage = new AccordionMenuComponent(provider);
+    // this._accordionListaPage._provider = provider;
 
   }
 

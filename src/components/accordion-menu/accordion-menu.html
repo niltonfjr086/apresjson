@@ -1,17 +1,15 @@
 <div #expandWrapper class='expand-wrapper' [class.collapsed]="!expanded">
 
-
-  TESTE
-  <!-- <form>
+   <form>
     <ion-item>
       <ion-label floating>Nome do Programa</ion-label>
-      <ion-select name="nome" [(ngModel)]="provider._filter.nom_programa">
-        <ion-option *ngFor="let item of provider.viewSelects['nom_programa']" [value]="item">{{ item }}</ion-option>
+      <ion-select name="nome" [(ngModel)]="_provider._filter.nom_programa">
+        <ion-option *ngFor="let item of _provider._viewSelects['nom_programa']" [value]="item">{{ item }}</ion-option>
       </ion-select>
     </ion-item>
 
 
-    <div class="autocomplete">
+  <!--  <div class="autocomplete">
       <ion-item>
         <ion-label floating>Município</ion-label>
         <ion-input name="municipio" [(ngModel)]="provider._filter.municipio" (input)="search()" (ionFocus)="toggleFocus()" debounce=500>
@@ -36,6 +34,6 @@
       <button ion-button color="dark" (click)="limpar()">Limpar</button>
       <button ion-button color="dark" (click)="buscar()">Buscar</button>
     </ion-buttons>
-  </form> -->
-
+   -->
+  </form>
 </div>

@@ -11,10 +11,16 @@
 
   </ion-navbar>
 
-  <div ion-item no-lines>
+  <!-- <div ion-item no-lines>
     {{situacao}}
     <list-expandable [expanded]="_isExpanded">
     </list-expandable>
+  </div> -->
+
+  <div ion-item no-lines>
+    {{situacao}}
+    <accordion-menu [expanded]="_isExpanded">
+    </accordion-menu>
   </div>
 
 </ion-header>
